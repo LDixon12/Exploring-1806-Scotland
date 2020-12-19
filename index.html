@@ -129,50 +129,71 @@
 
     // here we'll create markers for key places in the story
     const legend = L.marker([-280, 511]).addTo(map);
-    const frog = L.marker([-280, 258]).addTo(map);
-    const halleysComet = L.marker([-156, 638]).addTo(map);
+    const ocean = L.marker([-280, 258]).addTo(map);
+    const river = L.marker([-280, 258]).addTo(map);
+    const land = L.marker([-156, 638]).addTo(map);
+    const labels = L.marker([-156, 638]).addTo(map);
 
     // can use template strings for organizing text content
-    const twainImg = '<img src="./images/twain.jpeg">';
-    const twainLink = '<a href="">printing and typesetting</a>'
 
     // construct text string to be inserted into DOM
-    const legendHtml = `<h3>Legend items</h3><p></p>`
+    const legendHtml = `<h3>Interperting the legend!</h3><p></p>`
 
-    const frogHtml = `<h3>Frogs are cool</h3><p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which dont look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>`
+    const oceanHtml = `<h3>Lets take a dive!</h3><p></p>`
 
-    const cometHtml = `<h3>Halley's Cometis rad</h3><p>So beautiful ...</p>`;
+    const riverHtml = `<h3>Lets take a dive continued!</h3><p></p>`;
+
+    const landHtml = `<h3>Land ho!</h3><p></p>`;
+
+    const labelsHtml = `<h3>Read me!</h3><p></p>`;
+
+    const extrasHtml = `<h3>Extras!</h3><p></p>`;
 
     // function to be called when both clicking on marker and
     // when using UI buttons to move fowward and back
-    function triggerLex() {
+    function triggerLegend() {
       // replace exisiting HTML content in the side panel
-      placeInfo.html(lexHtml);
+      placeInfo.html(legendHtml);
       // fly the map to that location
-      map.flyTo(lex.getLatLng(), 3);
+      map.flyTo(legend.getLatLng(), 3);
     }
 
-    function triggerFrog() {
-      placeInfo.html(frogHtml);
-      map.flyTo(frog.getLatLng(), 3);
+    function triggerOcean() {
+      placeInfo.html(oceanHtml);
+      map.flyTo(ocean.getLatLng(), 3);
     }
 
-    function triggerComet() {
-      placeInfo.html(cometHtml);
-      map.flyTo(halleysComet.getLatLng(), 3);
+    function triggerRiver() {
+      placeInfo.html(riverHtml);
+      map.flyTo(river.getLatLng(), 3);
     }
 
-    // on marker click, trigger Lex event
-    lex.on('click', () => {
-      triggerLex();
+    function triggerLand() {
+      placeInfo.html(landHtml);
+      map.flyTo(land.getLatLng(), 3);
+    }
+
+    function triggerLabels() {
+      placeInfo.html(labelsHtml);
+      map.flyTo(labels.getLatLng(), 3);
+    }
+
+    function triggerExtras() {
+      placeInfo.html(extrasHtml);
+    }
+
+    // on marker click, trigger Legend event
+    legend.on('click', () => {
+      triggerLegend();
     });
 
-    frog.on('click', () => {
-      triggerFrog();
+    ocean.on('click', () => {
+      triggerOcean();
     });
+
 
     // use a list to dictate order of story
-    const story = ['lex', 'frog', 'comet'];
+    const story = ['legend', 'ocean', 'river', 'land', 'labels', 'extras'];
 
     // counter to keep track of where in story the user is
     let counter = 0;
@@ -180,9 +201,12 @@
     // object mapping the name of the places in the story
     // to the function to be triggered
     const storyMap = {
-      lex: triggerLex,
-      frog: triggerFrog,
-      comet: triggerComet
+      legend: triggerLegend,
+      ocean: triggerOcean,
+      river: triggerRiver,
+      land: triggerLand,
+      labels: triggerLabels,
+      extras: triggerExtras,
     }
 
     // forward button increments counter and calls appropriate trigger function
