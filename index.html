@@ -111,7 +111,7 @@
 
     // request IIIF layer and add to map
     const scotlandLayer = new L.tileLayer.iiif(
-      "https://maps.nls.uk/view/216442400/manifest.json"
+      "https://map-view.nls.uk/iiif/21644%2F216442400/info.json"
     ).addTo(map);
 
     // select the side panel div to insert info into later
@@ -128,11 +128,6 @@
     })
 
     // here we'll create markers for key places in the story
-    const legend = L.marker([-280, 511]).addTo(map);
-    const ocean = L.marker([-280, 258]).addTo(map);
-    const river = L.marker([-280, 258]).addTo(map);
-    const land = L.marker([-156, 638]).addTo(map);
-    const labels = L.marker([-156, 638]).addTo(map);
 
     // can use template strings for organizing text content
 
@@ -151,9 +146,9 @@
                          It is important to notice the changing of font and size between each line. We can interpert this as a form of hierarchy, the more important features being in larger, bolder font while the less important are in a smaller font. This also adds a florish and artistry to the legend that can make some of the fonts difficult to read. 
                           </p>`
 
-    const oceanHtml = `<h3>Lets take a dive!</h3><p></p>`
+    const textHtml = `<h3>Map purpose</h3><p></p>`
 
-    const riverHtml = `<h3>Lets take a dive continued!</h3><p></p>`;
+    const waterHtml = `<h3>Lets take a dive continued!</h3><p></p>`;
 
     const landHtml = `<h3>Land ho!</h3><p></p>`;
 
@@ -170,14 +165,14 @@
       map.flyTo(legend.getLatLng(), 3);
     }
 
-    function triggerOcean() {
-      placeInfo.html(oceanHtml);
-      map.flyTo(ocean.getLatLng(), 3);
+    function triggerText() {
+      placeInfo.html(textHtml);
+      map.flyTo(text.getLatLng(), 3);
     }
 
-    function triggerRiver() {
-      placeInfo.html(riverHtml);
-      map.flyTo(river.getLatLng(), 3);
+    function triggerWater() {
+      placeInfo.html(waterHtml);
+      map.flyTo(water.getLatLng(), 3);
     }
 
     function triggerLand() {
@@ -199,13 +194,13 @@
       triggerLegend();
     });
 
-    ocean.on('click', () => {
-      triggerOcean();
+    text.on('click', () => {
+      triggerText();
     });
 
 
     // use a list to dictate order of story
-    const story = ['legend', 'ocean', 'river', 'land', 'labels', 'extras'];
+    const story = ['legend', 'text', 'water', 'land', 'labels', 'extras'];
 
     // counter to keep track of where in story the user is
     let counter = 0;
@@ -214,8 +209,8 @@
     // to the function to be triggered
     const storyMap = {
       legend: triggerLegend,
-      ocean: triggerOcean,
-      river: triggerRiver,
+      text: triggerText,
+      water: triggerWater,
       land: triggerLand,
       labels: triggerLabels,
       extras: triggerExtras,
