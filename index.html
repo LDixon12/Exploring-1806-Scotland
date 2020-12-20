@@ -132,10 +132,10 @@
     // can use template strings for organizing text content
 
     // construct text string to be inserted into DOM
-    const legendHtml = `<h3>Interperting the legend!</h3><p></p>`
-
     const textHtml = `<h3>Map purpose</h3><p></p>`
-
+    
+    const legendHtml = `<h3>Interperting the legend!</h3><p></p>`
+     
     const waterHtml = `<h3>Lets take a dive!</h3><p></p>`;
 
     const landHtml = `<h3>Land ho!</h3><p></p>`;
@@ -146,31 +146,26 @@
 
     // function to be called when both clicking on marker and
     // when using UI buttons to move fowward and back
-    function triggerLegend() {
+    function triggerText() {
       // replace exisiting HTML content in the side panel
-      placeInfo.html(legendHtml);
+      placeInfo.html(textHtml);
       // fly the map to that location
-      map.flyTo(legend.getLatLng(), 3);
     }
 
-    function triggerText() {
-      placeInfo.html(textHtml);
-      map.flyTo(text.getLatLng(), 3);
+    function triggerLegend() {
+      placeInfo.html(legendHtml);
     }
 
     function triggerWater() {
       placeInfo.html(waterHtml);
-      map.flyTo(water.getLatLng(), 3);
     }
 
     function triggerLand() {
       placeInfo.html(landHtml);
-      map.flyTo(land.getLatLng(), 3);
     }
 
     function triggerLabels() {
       placeInfo.html(labelsHtml);
-      map.flyTo(labels.getLatLng(), 3);
     }
 
     function triggerExtras() {
@@ -179,16 +174,16 @@
 
     // on marker click, trigger Legend event
     legend.on('click', () => {
-      triggerLegend();
+      triggerText();
     });
 
     text.on('click', () => {
-      triggerText();
+      triggerLegend();
     });
 
 
     // use a list to dictate order of story
-    const story = ['legend', 'text', 'water', 'land', 'labels', 'extras'];
+    const story = ['text', 'legend', 'water', 'land', 'labels', 'extras'];
 
     // counter to keep track of where in story the user is
     let counter = 0;
@@ -196,8 +191,8 @@
     // object mapping the name of the places in the story
     // to the function to be triggered
     const storyMap = {
-      legend: triggerLegend,
-      text: triggerText,
+      legend: triggerText,
+      text: triggerLegend,
       water: triggerWater,
       land: triggerLand,
       labels: triggerLabels,
