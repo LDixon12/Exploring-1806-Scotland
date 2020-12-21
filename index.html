@@ -128,11 +128,18 @@
     })
 
     // here we'll create markers for key places in the story
+    const title = L.marker([-280, 511]).addTo(map);
+    const legend = L.marker([-280, 258]).addTo(map);
+    const water = L.marker([-156, 638]).addTo(map);
+    const land = L.marker([-280, 511]).addTo(map);
+    const labels = L.marker([-280, 258]).addTo(map);
 
     // can use template strings for organizing text content
-
+    const stockdaleImg = '<img src="graphics/Stockdale1806.jpg">';
+    const stockdaleLink = '<a href="">printing and typesetting</a>'
     // construct text string to be inserted into DOM
-    const textHtml = `<h3>Map purpose</h3><p></p>`
+    const titleHtml = `<h3>Map Title</h3><p>${stockdaleImg} Like other titles of 1860 Scotland maps (See Stockdale, 1806 image) T. Brown. uses several differnt fonts and sizes along with swirled line decoration.
+                       While this looks pretty it can be difficult to read the thinner fonts that have the same swirl like consistency of the decorative lines.</p>`
     
     const legendHtml = `<h3>Interperting the legend!</h3><p></p>`
      
@@ -146,26 +153,31 @@
 
     // function to be called when both clicking on marker and
     // when using UI buttons to move fowward and back
-    function triggerText() {
+    function triggerTitle() {
       // replace exisiting HTML content in the side panel
-      placeInfo.html(textHtml);
+      placeInfo.html(titleHtml);
       // fly the map to that location
+      map.flyTo(title.getLatLng(), 3);
     }
 
     function triggerLegend() {
       placeInfo.html(legendHtml);
+      map.flyTo(legend.getLatLng(), 3);
     }
 
     function triggerWater() {
       placeInfo.html(waterHtml);
+      map.flyTo(water.getLatLng(), 3);
     }
 
     function triggerLand() {
       placeInfo.html(landHtml);
+      map.flyTo(land.getLatLng(), 3);
     }
 
     function triggerLabels() {
       placeInfo.html(labelsHtml);
+      map.flyTo(labels.getLatLng(), 3);
     }
 
     function triggerExtras() {
@@ -173,17 +185,17 @@
     }
 
     // on marker click, trigger Legend event
-    legend.on('click', () => {
-      triggerText();
+    title.on('click', () => {
+      triggerTitle();
     });
 
-    text.on('click', () => {
+    legend.on('click', () => {
       triggerLegend();
     });
 
 
     // use a list to dictate order of story
-    const story = ['text', 'legend', 'water', 'land', 'labels', 'extras'];
+    const story = ['title', 'legend', 'water', 'land', 'labels', 'extras'];
 
     // counter to keep track of where in story the user is
     let counter = 0;
@@ -191,8 +203,8 @@
     // object mapping the name of the places in the story
     // to the function to be triggered
     const storyMap = {
-      legend: triggerText,
-      text: triggerLegend,
+      title: triggerTitle, 
+      legend: triggerLegend,
       water: triggerWater,
       land: triggerLand,
       labels: triggerLabels,
