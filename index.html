@@ -26,6 +26,11 @@
 			line-height: 1.5em;
             color:#ffffff
 		}   
+    li {
+			font-size: .9em;
+			line-height: 1.5em;
+            color:#ffffff
+		}  
     h3 {
 			font-size: 1.5em;
 			line-height: 1.5em;
@@ -131,31 +136,43 @@
     const title = L.marker([-10, 120]).addTo(map);
     const legend = L.marker([-230, 40]).addTo(map);
     const water = L.marker([-90, 65]).addTo(map);
-    const land = L.marker([-280, 100]).addTo(map);
-    const labels = L.marker([-200, 130]).addTo(map);
+    const land = L.marker([-210, 150]).addTo(map);
+    const extras = L.marker([-13, 137]).addTo(map);
 
     // can use template strings for organizing text content
     const stockdaleImg = '<img src="graphics/Stockdale1806.jpg">';
     const stockdaleLink = '<a href="">printing and typesetting</a>'
+
+    const smithImg = '<img src="graphics/smith1806.png">';
+    const smithLink = '<a href="">printing and typesetting</a>'
+
+    const barlowImg = '<img src="graphics/barlow1806.jpg">';
+    const barlowLink = '<a href="">printing and typesetting</a>'
     // construct text string to be inserted into DOM
     const titleHtml = `<h3>Map Title</h3><p>${stockdaleImg} Like other titles of 1860 Scotland maps (See Stockdale, 1806 image) T. Brown. uses several differnt fonts and sizes along with swirled line decoration.
                        While this looks pretty it can be difficult to read the thinner fonts that have the same swirl like consistency of the decorative lines.</p>`
     
-    const legendHtml = `<h3>Interperting the legend!</h3><p></p>`
+    const legendHtml = `<h3>Interperting the legend!</h3><p>${smithImg} T. Browns legend in this map is very well done and actually gives us symbology of the important features unlike other 1806 maps I have seen where they just list the important features in text form with the title element (see Smith, 1806 image). 
+                       Since this is a traveling map the important features are roads, bridges, canals and division lines between the Highlands and Lowlands of Scotland. </p>`
      
-    const waterHtml = `<h3>Lets take a dive!</h3><p></p>`;
+    const waterHtml = `<h3>Lets take a dive!</h3><p>${barlowImg}The only major bodies of water that T. Brown labels on our traveling map is Little Minsh, The Minsh and the North Channel. The font is large, bolded and easy to see. You will notice T. Brown also had the lettering curve with the shape of the water body. 
+                      If they had palced the title in a different spot on the map they would have also labeled the North Sea (see Barlow, 1806 image)</p>`;
 
-    const landHtml = `<h3>Land ho!</h3><p></p>`;
+    const landHtml = `<h3>Land ho!</h3><p>I have chosen to focus on Edinburgh to look at how T. Brown symbolized and labeled the land features. He gave a heirarchy to the labels with Shires being the most important, then cities, then towns. The boarders of the Shires and coastlines were hand colored for emphasis.
+                                          <br>
+                                          <br>
+                                          The road ways symbolized by the hollow looking lines all seem to fan out from a central point on the coast. From this we can deduce that is the port location for the city of Edinburgh.</p>`;
 
-    const labelsHtml = `<h3>Read me!</h3><p></p>`;
-
-    const extrasHtml = `<h3>Extras!</h3><p></p>`;
+    const extrasHtml = `<h3>Extras!</h3><p>
+                        <li>Sheet imperfections: Used and worn, LC Map Division acquisition date rubber-stamped at top in map area and water stains on cloth backing that are not visible on the digital image but is noted on the maps source webpage.</li>
+                        <li>While this map doesn't have a scale bar, if you look to the borders you will see that it has the latitude and longitudes listed.</li>
+                        <li>Noted in the map source webpage when T. Browns map was affixed to the cloth backing, the map sheet was sectioned to 20 panels to enable folding.</li></p>`;
 
     const sourcesHtml = `<h3>Map and photo sources</h3><p>
                          <li>Map: Brown, T., Lizars, D. & Fillmore, M. (1806) A travelling map of Scotland: including all the new and intended roads, bridges & canals, &c.: taken from the latest & best authorities. [Edin'h Edinburgh, Scotland: Published by T. Brown] [Map] Retrieved from the Library of Congress, https://www.loc.gov/item/2018588003/.</li>
-                         <li>Title image: Stockdale, John(1806) Map of Scotland from the latest surveys. [London : Published by John Stockdale,] [Map] Retrieved from the National Library of Scotland, https://maps.nls.uk/joins/734.html</li>
-                         <li>Legend image: </li>
-                         <li>Water image </li> 
+                         <li>Title image: Stockdale, John (1806) Map of Scotland from the latest surveys. [London : Published by John Stockdale] [Map] Retrieved from the National Library of Scotland, https://maps.nls.uk/joins/734.html</li>
+                         <li>Legend image: Smith, C. (1806) New Map of Great Britain and Ireland [Sheet: Eastern Scotland Published by C. Smith] [Map] Retrieved from the British Library, https://www.visionofbritain.org.uk/maps/sheet/smith_1806/smith1_1806</li>
+                         <li>Water image: Barlow Blomfield, Ezekiel Brightly, C Kinnersley, (1806) 	Scotland from the best authorities. [	Bungay, Suffolk : Published by C Brightly & E Kinnersley, June 1st, 1806.] [Map] Retrieved from the National Library of Scotland, https://maps.nls.uk/view/216442400</li> 
                          </p>`;
 
     // function to be called when both clicking on marker and
@@ -182,13 +199,9 @@
       map.flyTo(land.getLatLng(), 3);
     }
 
-    function triggerLabels() {
-      placeInfo.html(labelsHtml);
-      map.flyTo(labels.getLatLng(), 3);
-    }
-
     function triggerExtras() {
       placeInfo.html(extrasHtml);
+      map.flyTo(extras.getLatLng(), 3);
     }
 
     function triggerSources() {
@@ -206,7 +219,7 @@
 
 
     // use a list to dictate order of story
-    const story = ['title', 'legend', 'water', 'land', 'labels', 'extras', 'sources'];
+    const story = ['title', 'legend', 'water', 'land', 'extras', 'sources'];
 
     // counter to keep track of where in story the user is
     let counter = 0;
@@ -218,7 +231,6 @@
       legend: triggerLegend,
       water: triggerWater,
       land: triggerLand,
-      labels: triggerLabels,
       extras: triggerExtras,
       sources: triggerSources,
     }
